@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iTrust Premium | A Evolução do Seu iPhone</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        brand: {
+                            blue: '#2997FF',
+                            whatsapp: '#25D366'
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-glow': 'pulseGlow 2s infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-15px)' },
+                        },
+                        pulseGlow: {
+                            '0%': { boxShadow: '0 0 0 0 rgba(37,211,102, 0.4)' },
+                            '70%': { boxShadow: '0 0 0 15px rgba(37,211,102, 0)' },
+                            '100%': { boxShadow: '0 0 0 0 rgba(37,211,102, 0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        body { background-color: #050505; color: #f5f5f7; overflow-x: hidden; }
+
+        /* Estilo de Vidro (Glassmorphism) */
+        .glass {
+            background: rgba(20, 20, 20, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .text-gradient {
+            background: linear-gradient(135deg, #ffffff 0%, #a1a1aa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .blue-gradient {
+            background: linear-gradient(135deg, #2997FF 0%, #0056b3 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        /* Fundo com luzes dinâmicas otimizado para telas gigantes e mobile */
+        .ambient-light {
+            position: absolute;
+            width: min(800px, 90vw);
+            height: min(800px, 90vw);
+            background: radial-gradient(circle, rgba(41,151,255,0.1) 0%, rgba(0,0,0,0) 60%);
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Correções estritas de quebra de texto para telas ultra-pequenas */
+        .break-words-custom {
+            word-break: break-word;
+            overflow-wrap: break-word;
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #050505; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+    </style>
+</head>
+<body class="antialiased selection:bg-brand-blue selection:text-white relative w-full">
+
+    <div class="ambient-light"></div>
+
+    <!-- WhatsApp Flutuante (Otimizado p/ Touch e Desktop) -->
+    <a href="https://wa.me/5519999999999" target="_blank" class="fixed bottom-5 right-5 sm:bottom-6 sm:right-6 z-50 bg-brand-whatsapp text-white p-3.5 sm:p-4 rounded-full animate-pulse-glow hover:scale-110 transition-transform duration-300 flex items-center justify-center group shadow-xl">
+        <i class="ph-fill ph-whatsapp-logo text-2xl sm:text-3xl"></i>
+        <span class="absolute right-16 bg-white text-black text-xs sm:text-sm font-bold py-1.5 px-3 sm:py-2 sm:px-4 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap hidden sm:block">
+            Falar com Especialista
+        </span>
+    </a>
+
+    <!-- Navbar Responsiva com Menu Mobile Interativo -->
+    <header class="fixed w-full z-50 glass transition-all duration-300 border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 sm:h-20 flex justify-between items-center">
+            <div class="text-xl sm:text-2xl font-bold tracking-tight text-white cursor-pointer">
+                iTrust<span class="text-brand-blue">.</span>
+            </div>
+            
+            <!-- Links Desktop -->
+            <nav class="hidden md:flex space-x-6 lg:space-x-8 text-sm font-medium text-gray-300">
+                <a href="#diferenciais" class="hover:text-white transition">O Padrão iTrust</a>
+                <a href="#tradein" class="hover:text-white transition">Como Funciona a Troca</a>
+                <a href="#estoque" class="hover:text-white transition">Estoque</a>
+                <a href="#faq" class="hover:text-white transition">Dúvidas</a>
+            </nav>
+
+            <div class="flex items-center gap-3">
+                <a href="https://wa.me/5519999999999" target="_blank" class="bg-white text-black px-4 py-2 sm:px-5 sm:py-2.5 rounded-full text-xs sm:text-sm font-bold hover:bg-gray-200 transition shadow-[0_0_15px_rgba(255,255,255,0.2)]">
+                    Fale Conosco
+                </a>
+                <!-- Botão Menu Mobile Toggle -->
+                <button id="menu-btn" class="md:hidden text-white text-2xl p-1 focus:outline-none" aria-label="Menu">
+                    <i class="ph ph-list"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Menu Dropdown Mobile -->
+        <div id="mobile-menu" class="hidden md:hidden glass border-b border-white/10 px-6 py-6 flex flex-col space-y-4">
+            <a href="#diferenciais" class="mobile-link text-gray-300 hover:text-white text-base font-medium transition">O Padrão iTrust</a>
+            <a href="#tradein" class="mobile-link text-gray-300 hover:text-white text-base font-medium transition">Como Funciona a Troca</a>
+            <a href="#estoque" class="mobile-link text-gray-300 hover:text-white text-base font-medium transition">Estoque</a>
+            <a href="#faq" class="mobile-link text-gray-300 hover:text-white text-base font-medium transition">Dúvidas</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 sm:pt-40 md:pt-52 pb-16 sm:pb-20 md:pb-32 flex flex-col items-center text-center px-4 sm:px-6">
+        <div class="max-w-5xl mx-auto z-10 w-full">
+            <div data-aos="fade-down" data-aos-duration="1000" class="inline-flex items-center gap-2 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full glass mb-6 sm:mb-8 text-center max-w-full">
+                <span class="relative flex h-2 w-2 shrink-0">
+                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-blue opacity-75"></span>
+                  <span class="relative inline-flex rounded-full h-2 w-2 bg-brand-blue"></span>
+                </span>
+                <span class="text-[11px] sm:text-xs font-medium text-gray-300 tracking-wider uppercase truncate">Envio para todo o Brasil & Delivery RMC</span>
+            </div>
+            
+            <h1 data-aos="zoom-in" data-aos-duration="1200" class="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tighter mb-4 sm:mb-6 text-gradient leading-[1.1] sm:leading-tight break-words-custom">
+                A evolução do seu <br class="hidden sm:inline">iPhone começa <span class="blue-gradient">aqui.</span>
+            </h1>
+            
+            <p data-aos="fade-up" data-aos-delay="200" data-aos-duration="1000" class="text-base sm:text-lg md:text-xl text-gray-400 mb-8 sm:mb-10 max-w-2xl mx-auto font-light leading-relaxed px-2">
+                Trabalhamos com aparelhos lacrados e seminovos premium. Garantia total, entrega ágil via delivery na região de Campinas e envios seguros via Correios para onde você estiver.
+            </p>
+            
+            <div data-aos="fade-up" data-aos-delay="400" class="flex flex-col sm:flex-row gap-3.5 sm:gap-4 justify-center w-full max-w-md sm:max-w-none mx-auto">
+                <a href="https://wa.me/5519999999999" class="bg-brand-blue hover:bg-blue-600 text-white px-6 sm:px-8 py-3.5 sm:py-4 rounded-full font-semibold text-base sm:text-lg transition flex items-center justify-center gap-2 shadow-[0_0_30px_rgba(41,151,255,0.3)]">
+                    Ver Aparelhos Disponíveis
+                </a>
+                <a href="#tradein" class="glass hover:bg-white/10 text-white px-6 sm:px-8 py-3.5 sm:py-4 rounded-full font-semibold text-base sm:text-lg transition flex items-center justify-center gap-2">
+                    Avaliar meu Usado
+                </a>
+            </div>
+        </div>
+        
+        <!-- Imagem Hero Flutuante Responsiva -->
+        <div data-aos="fade-up" data-aos-delay="600" data-aos-duration="1500" class="mt-12 sm:mt-16 md:mt-20 w-full max-w-6xl mx-auto animate-float px-2 sm:px-0">
+            <img src="https://images.unsplash.com/photo-1611406208502-0c9f13a0c02a?q=80&w=2070&auto=format&fit=crop" alt="iPhones Premium Showcase" class="rounded-2xl sm:rounded-[2.5rem] border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)] w-full h-[260px] sm:h-[400px] md:h-[600px] object-cover">
+        </div>
+    </section>
+
+    <!-- O que é o Padrão Grade A+? -->
+    <section id="diferenciais" class="py-16 sm:py-24 relative z-20 px-4 sm:px-6">
+        <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+            <div data-aos="fade-right" data-aos-duration="1000">
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6 tracking-tight">O que é um Seminovo <span class="text-brand-blue">Grade A+?</span></h2>
+                <p class="text-gray-400 text-base sm:text-lg mb-6 sm:mb-8 leading-relaxed">
+                    A maioria dos celulares vendidos hoje como "seminovos" são aparelhos de vitrine recondicionados. Na iTrust, nós não aceitamos isso. Garantimos qualidade absoluta.
+                </p>
+                
+                <div class="space-y-5 sm:space-y-6">
+                    <div class="flex items-start gap-3.5 sm:gap-4">
+                        <div class="bg-brand-blue/20 p-2.5 sm:p-3 rounded-xl text-brand-blue shrink-0"><i class="ph-fill ph-check-circle text-xl sm:text-2xl"></i></div>
+                        <div>
+                            <h4 class="text-lg sm:text-xl font-bold text-white mb-1">Nunca Abertos</h4>
+                            <p class="text-gray-500 text-sm leading-relaxed">Aparelhos com vedação original de fábrica. Zero peças paralelas, garantindo a durabilidade e funcionamento perfeito.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-3.5 sm:gap-4">
+                        <div class="bg-brand-blue/20 p-2.5 sm:p-3 rounded-xl text-brand-blue shrink-0"><i class="ph-fill ph-battery-charging text-xl sm:text-2xl"></i></div>
+                        <div>
+                            <h4 class="text-lg sm:text-xl font-bold text-white mb-1">Bateria de Alta Performance</h4>
+                            <p class="text-gray-500 text-sm leading-relaxed">Aparelhos selecionados a dedo com saúde de bateria sempre em níveis de excelência, para acompanhar o seu dia inteiro.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-3.5 sm:gap-4">
+                        <div class="bg-brand-blue/20 p-2.5 sm:p-3 rounded-xl text-brand-blue shrink-0"><i class="ph-fill ph-sparkle text-xl sm:text-2xl"></i></div>
+                        <div>
+                            <h4 class="text-lg sm:text-xl font-bold text-white mb-1">Estética Impecável</h4>
+                            <p class="text-gray-500 text-sm leading-relaxed">Avaliamos rigorosamente a carcaça e a tela. Selecionamos apenas aparelhos que entregam a sensação de um celular novo.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div data-aos="fade-left" data-aos-duration="1000" class="relative mt-8 lg:mt-0">
+                <div class="absolute inset-0 bg-brand-blue/20 blur-[80px] sm:blur-[100px] rounded-full"></div>
+                <img src="https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?q=80&w=1000&auto=format&fit=crop" alt="Qualidade Premium" class="relative rounded-2xl sm:rounded-3xl border border-white/10 w-full h-[320px] sm:h-[420px] md:h-[500px] object-cover">
+            </div>
+        </div>
+    </section>
+
+    <!-- Passo a Passo do Trade In -->
+    <section id="tradein" class="py-16 sm:py-24 bg-[#0a0a0a] border-y border-white/5 px-4 sm:px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-12 sm:mb-16" data-aos="fade-up">
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4 tracking-tight">Seu usado vale <span class="text-brand-blue">dinheiro.</span></h2>
+                <p class="text-gray-400 text-base sm:text-lg">Trocar de iPhone nunca foi tão fácil, seguro e transparente.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6 sm:gap-8 relative">
+                <!-- Linha conectora (Desktop apenas) -->
+                <div class="hidden md:block absolute top-1/2 left-0 w-full h-px bg-white/10 -z-0 -translate-y-1/2"></div>
+                
+                <!-- Passo 1 -->
+                <div data-aos="fade-up" data-aos-delay="100" class="glass p-6 sm:p-8 rounded-3xl text-center relative z-10 hover:-translate-y-2 transition duration-300">
+                    <div class="w-14 h-14 sm:w-16 sm:h-16 bg-black border border-brand-blue rounded-full flex items-center justify-center text-xl sm:text-2xl text-brand-blue font-bold mx-auto mb-5 sm:mb-6 shadow-[0_0_20px_rgba(41,151,255,0.2)]">1</div>
+                    <h3 class="text-xl sm:text-2xl font-bold mb-2 sm:mb-3 text-white">A Avaliação</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Você nos envia fotos e o status da bateria do seu iPhone atual pelo WhatsApp. Fazemos uma pré-avaliação ágil na hora.</p>
+                </div>
+
+                <!-- Passo 2 -->
+                <div data-aos="fade-up" data-aos-delay="300" class="glass p-6 sm:p-8 rounded-3xl text-center relative z-10 hover:-translate-y-2 transition duration-300">
+                    <div class="w-14 h-14 sm:w-16 sm:h-16 bg-black border border-brand-blue rounded-full flex items-center justify-center text-xl sm:text-2xl text-brand-blue font-bold mx-auto mb-5 sm:mb-6 shadow-[0_0_20px_rgba(41,151,255,0.2)]">2</div>
+                    <h3 class="text-xl sm:text-2xl font-bold mb-2 sm:mb-3 text-white">A Oferta Justa</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Apresentamos o valor que pagamos no seu aparelho. O valor entra como desconto imediato na compra do seu novo iPhone.</p>
+                </div>
+
+                <!-- Passo 3 -->
+                <div data-aos="fade-up" data-aos-delay="500" class="glass p-6 sm:p-8 rounded-3xl text-center relative z-10 hover:-translate-y-2 transition duration-300">
+                    <div class="w-14 h-14 sm:w-16 sm:h-16 bg-black border border-brand-blue rounded-full flex items-center justify-center text-xl sm:text-2xl text-brand-blue font-bold mx-auto mb-5 sm:mb-6 shadow-[0_0_20px_rgba(41,151,255,0.2)]">3</div>
+                    <h3 class="text-xl sm:text-2xl font-bold mb-2 sm:mb-3 text-white">Recebimento Seguro</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Você recebe via delivery na região de Campinas ou enviamos via Correios com seguro total para o restante do Brasil.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Estoque -->
+    <section id="estoque" class="py-16 sm:py-24 relative z-20 px-4 sm:px-6">
+        <div class="max-w-7xl mx-auto">
+            <h2 data-aos="fade-right" class="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4 text-white tracking-tight">Pronta Entrega</h2>
+            <p data-aos="fade-right" data-aos-delay="100" class="text-gray-400 mb-10 sm:mb-12 text-base sm:text-lg">Consulte os modelos disponíveis com envio rápido para todo Brasil.</p>
+
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Aparelho 1 -->
+                <div data-aos="zoom-in" data-aos-delay="100" class="glass rounded-[2rem] p-4 flex flex-col justify-between group hover:border-brand-blue transition duration-500">
+                    <div>
+                        <div class="overflow-hidden rounded-2xl h-56 sm:h-64 mb-5 sm:mb-6 relative">
+                            <span class="absolute top-4 right-4 bg-brand-blue text-white text-xs font-bold px-3 py-1 rounded-full z-10 shadow-lg">Novo | Lacrado</span>
+                            <img src="https://images.unsplash.com/photo-1695048133142-1a20484d2569?q=80&w=1000&auto=format&fit=crop" alt="iPhone 15 Pro" class="object-cover w-full h-full group-hover:scale-110 transition duration-700">
+                        </div>
+                        <div class="px-2">
+                            <h3 class="text-xl sm:text-2xl font-bold mb-1 text-white">iPhone 15 Pro</h3>
+                            <p class="text-gray-500 text-xs sm:text-sm mb-6">Capacidades e cores sob consulta.</p>
+                        </div>
+                    </div>
+                    <div class="px-2 pb-2">
+                        <a href="https://wa.me/5519999999999" class="w-full bg-white text-black text-center py-3 rounded-xl font-bold text-sm block hover:bg-gray-200 transition">Consultar Valor</a>
+                    </div>
+                </div>
+
+                <!-- Aparelho 2 -->
+                <div data-aos="zoom-in" data-aos-delay="300" class="glass rounded-[2rem] p-4 flex flex-col justify-between group hover:border-brand-blue transition duration-500">
+                    <div>
+                        <div class="overflow-hidden rounded-2xl h-56 sm:h-64 mb-5 sm:mb-6 relative">
+                            <span class="absolute top-4 right-4 bg-gray-800 border border-gray-600 text-white text-xs font-bold px-3 py-1 rounded-full z-10 backdrop-blur-md">Grade A+</span>
+                            <img src="https://images.unsplash.com/photo-1678652197831-2d180705cd2c?q=80&w=1000&auto=format&fit=crop" alt="iPhone 14" class="object-cover w-full h-full group-hover:scale-110 transition duration-700">
+                        </div>
+                        <div class="px-2">
+                            <h3 class="text-xl sm:text-2xl font-bold mb-1 text-white">iPhone 14</h3>
+                            <p class="text-gray-500 text-xs sm:text-sm mb-6">Aparelho impecável. 100% Original.</p>
+                        </div>
+                    </div>
+                    <div class="px-2 pb-2">
+                        <a href="https://wa.me/5519999999999" class="w-full bg-white text-black text-center py-3 rounded-xl font-bold text-sm block hover:bg-gray-200 transition">Consultar Valor</a>
+                    </div>
+                </div>
+
+                <!-- Aparelho 3 -->
+                <div data-aos="zoom-in" data-aos-delay="500" class="glass rounded-[2rem] p-4 flex flex-col justify-between group hover:border-brand-blue transition duration-500 sm:col-span-2 lg:col-span-1">
+                    <div>
+                        <div class="overflow-hidden rounded-2xl h-56 sm:h-64 mb-5 sm:mb-6 relative">
+                            <span class="absolute top-4 right-4 bg-gray-800 border border-gray-600 text-white text-xs font-bold px-3 py-1 rounded-full z-10 backdrop-blur-md">Grade A+</span>
+                            <img src="https://images.unsplash.com/photo-1605236453806-6ff3685e219e?q=80&w=1000&auto=format&fit=crop" alt="iPhone 13" class="object-cover w-full h-full group-hover:scale-110 transition duration-700">
+                        </div>
+                        <div class="px-2">
+                            <h3 class="text-xl sm:text-2xl font-bold mb-1 text-white">iPhone 13</h3>
+                            <p class="text-gray-500 text-xs sm:text-sm mb-6">O campeão de vendas. Bateria alta.</p>
+                        </div>
+                    </div>
+                    <div class="px-2 pb-2">
+                        <a href="https://wa.me/5519999999999" class="w-full bg-white text-black text-center py-3 rounded-xl font-bold text-sm block hover:bg-gray-200 transition">Consultar Valor</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ (Dúvidas Frequentes) -->
+    <section id="faq" class="py-16 sm:py-24 bg-[#0a0a0a] border-t border-white/5 px-4 sm:px-6">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-12 sm:mb-16" data-aos="fade-up">
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4 text-white tracking-tight">Perguntas Frequentes</h2>
+                <p class="text-gray-400 text-base sm:text-lg">Transparência total antes de você fechar negócio.</p>
+            </div>
+
+            <div class="space-y-4">
+                <!-- Pergunta 1 -->
+                <div data-aos="fade-up" data-aos-delay="100" class="glass p-5 sm:p-6 rounded-2xl">
+                    <h4 class="text-base sm:text-lg font-bold text-white mb-2 flex items-center gap-2"><i class="ph-fill ph-question text-brand-blue text-xl shrink-0"></i> Os aparelhos têm garantia?</h4>
+                    <p class="text-gray-400 text-sm leading-relaxed">Sim. Todos os nossos aparelhos acompanham garantia legal de 90 dias contra qualquer defeito de fabricação. Cuidamos do pós-venda para você não ter dor de cabeça.</p>
+                </div>
+                <!-- Pergunta 2 -->
+                <div data-aos="fade-up" data-aos-delay="200" class="glass p-5 sm:p-6 rounded-2xl">
+                    <h4 class="text-base sm:text-lg font-bold text-white mb-2 flex items-center gap-2"><i class="ph-fill ph-credit-card text-brand-blue text-xl shrink-0"></i> Quais as formas de pagamento?</h4>
+                    <p class="text-gray-400 text-sm leading-relaxed">Aceitamos Pix para pagamentos à vista com as melhores condições, e parcelamos em até 12x no cartão de crédito (com taxas de antecipação repassadas na simulação).</p>
+                </div>
+                <!-- Pergunta 3 -->
+                <div data-aos="fade-up" data-aos-delay="300" class="glass p-5 sm:p-6 rounded-2xl">
+                    <h4 class="text-base sm:text-lg font-bold text-white mb-2 flex items-center gap-2"><i class="ph-fill ph-truck text-brand-blue text-xl shrink-0"></i> Como funcionam as entregas?</h4>
+                    <p class="text-gray-400 text-sm leading-relaxed">Realizamos entregas rápidas via motoboy (delivery) para toda a região metropolitana de Campinas e arredores. Para clientes de outros estados, fazemos o envio com seguro completo através dos Correios.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/5 bg-[#050505] py-10 sm:py-12 px-4 sm:px-6">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center text-gray-500 text-xs sm:text-sm gap-6 md:gap-0">
+            <div class="text-center md:text-left">
+                <div class="text-2xl font-bold tracking-tight text-white mb-2">
+                    iTrust<span class="text-brand-blue">.</span>
+                </div>
+                <p>&copy; 2026 iTrust Premium. Todos os direitos reservados.</p>
+                <p class="mt-1">Atendendo Campinas, região e enviando via Correios para todo o Brasil.</p>
+            </div>
+            <div class="flex gap-6">
+                <a href="https://wa.me/5519999999999" class="hover:text-white transition flex items-center gap-2">
+                    <i class="ph ph-whatsapp-logo text-xl"></i> WhatsApp
+                </a>
+                <a href="#" class="hover:text-white transition flex items-center gap-2">
+                    <i class="ph ph-instagram-logo text-xl"></i> Instagram
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts da Biblioteca AOS e Toggle Mobile -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            once: true,
+            offset: 80, 
+            easing: 'ease-out-cubic',
+        });
+
+        // Script para abrir/fechar o menu mobile de forma fluida
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+    </script>
+</body>
+</html>
